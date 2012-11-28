@@ -916,6 +916,7 @@ class MeioUploadBehavior extends ModelBehavior {
 
 			// Make the thumbnail reference absolute to avoid problems with phpThumb in CakePHP 2.0
 			$thumbSaveAs = WWW_ROOT . $thumbSaveAs;
+			$saveAs = WWW_ROOT . $saveAs; // this is passed to phpthumb::setSourceFilename so it also has to be absolute
 
 			$params = array();
 			if (isset($value['width'])) {
