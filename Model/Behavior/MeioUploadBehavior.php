@@ -906,6 +906,7 @@ class MeioUploadBehavior extends ModelBehavior {
  * @access protected
  */
 	function _createThumbnails(&$model, $data, $fieldName, $saveAs, $ext, $options) {
+		$saveAs = WWW_ROOT . $saveAs;
 		foreach ($options['thumbsizes'] as $key => $value) {
 			// Generate the name for the thumbnail
 			if (isset($options['uploadName']) && !empty($options['uploadName'])) {
@@ -913,10 +914,8 @@ class MeioUploadBehavior extends ModelBehavior {
 			} else {
 				$thumbSaveAs = $this->_getThumbnailName($saveAs, $options['dir'], $options['thumbnailDir'], $key, $data[$model->alias][$fieldName]['name']);
 			}
-
 			// Make the thumbnail reference absolute to avoid problems with phpThumb in CakePHP 2.0
 			$thumbSaveAs = WWW_ROOT . $thumbSaveAs;
-			$saveAs = WWW_ROOT . $saveAs; // this is passed to phpthumb::setSourceFilename so it also has to be absolute
 
 			$params = array();
 			if (isset($value['width'])) {
@@ -965,7 +964,6 @@ class MeioUploadBehavior extends ModelBehavior {
 
 		// Import phpThumb class
 		$test = App::import('Vendor','phpthumb', array('file' => 'phpThumb' . DS . 'phpthumb.class.php'));
-
 		// Configuring thumbnail settings
 		$phpThumb = new phpthumb;
 		$phpThumb->setSourceFilename($source);
